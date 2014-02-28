@@ -1,0 +1,9 @@
+#!/bin/bash -e
+# set nss-pam-ldapd binddn, password and server
+
+. /etc/default/inithooks
+
+[ -e $INITHOOKS_CONF ] && . $INITHOOKS_CONF
+
+$INITHOOKS_PATH/bin/nss_ldapd.py --base="$LDAP_BASEDN" --binddn="$LDAP_BINDDN" --pass="$LDAP_PASS" --server="$LDAP_SERVER"
+

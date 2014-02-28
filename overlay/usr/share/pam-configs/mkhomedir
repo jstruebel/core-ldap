@@ -1,0 +1,7 @@
+Name: Create home directory on first time login
+Default: yes
+Priority: 0
+Session-Interactive-Only: yes
+Session-Type: Additional
+Session-Final:
+        required        pam_mkhomedir.so

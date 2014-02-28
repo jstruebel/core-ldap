@@ -1,0 +1,21 @@
+#!/bin/bash -ex
+install()
+{
+    apt-get update
+    DEBIAN_FRONTEND=noninteractive apt-get -y \
+        -o DPkg::Options::=--force-confdef \
+        -o DPkg::Options::=--force-confold \
+        install $@
+}
+
+LDAP_PASS=turnkey
+LDAP_BASE="dc=example,dc=com"
+LDAP_BINDDN="cn=nss_pam,$LDAP_BASE"
+LDAP_SERVER=ldap://127.0.0.1
+
+# install nss-pam-ldapd packages
+install libnss-ldapd libpam-ldapd nslcd nscd
+
+# re-initialize libnss-ldapd
+/usr/lib/inithooks/bin/nss_ldapd.py --server=$LDAP_SERVER --base=$LDAP_BASE --binddn=$LDAP_BINDDN --pass=$LDAP_PASS
+
