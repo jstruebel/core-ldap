@@ -58,7 +58,7 @@ def main():
             DEFAULT_BASE)
 
     if ldap_base == "DEFAULT":
-        ldap_base = DEFAULT_DOMAIN
+        ldap_base = DEFAULT_BASE
 
     if not ldap_user:
         if 'd' not in locals():
