@@ -65,3 +65,10 @@ else
     /etc/init.d/nslcd stop
 fi
 
+[ -e $INITHOOKS_CONF ] && exit 0
+
+cat $INITHOOKS_CONF << EOF
+export LDAP_BASEDN=$LDAP_BASEDN
+export LDAP_SERVER=$LDAP_SERVER
+EOF
+
