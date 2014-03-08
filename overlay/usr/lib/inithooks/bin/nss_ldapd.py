@@ -24,7 +24,7 @@ def usage(s=None):
     sys.exit(1)
 
 DEFAULT_BASE="dc=example,dc=com"
-DEFAULT_SERVER='ldap://127.0.0.1'
+DEFAULT_SERVER='ldaps://127.0.0.1'
 
 def main():
     try:
@@ -83,7 +83,7 @@ def main():
 
         server = d.get_input(
             "LDAP Server",
-            "Enter the LDAP Server.",
+            "Enter the LDAP Server URI.",
             DEFAULT_SERVER)
 
     script = os.path.join(os.path.dirname(__file__), 'nss_ldapd-reinit.sh')

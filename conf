@@ -11,10 +11,15 @@ install()
 LDAP_PASS=turnkey
 LDAP_BASE="dc=example,dc=com"
 LDAP_BINDDN="cn=nss_pam,$LDAP_BASE"
-LDAP_SERVER=ldap://127.0.0.1
+LDAP_SERVER=ldaps://127.0.0.1
 
 # install nss-pam-ldapd packages
 install libnss-ldapd libpam-ldapd nslcd nscd
+
+# enable ssl for nslcd
+CONF=/etc/nslcd.conf
+sed -i "s|#ssl.*|ssl on|" $CONF
+sed -i "s|#tls_reqcert.*|tls_reqcert never|" $CONF
 
 # re-initialize libnss-ldapd
 /usr/lib/inithooks/bin/nss_ldapd.py --server=$LDAP_SERVER --base=$LDAP_BASE --binddn=$LDAP_BINDDN --pass=$LDAP_PASS
