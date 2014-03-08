@@ -44,9 +44,10 @@ mv $CONF ${CONF}_bak
 # re-configure libnss-ldapd
 debconf-set-selections << EOF
 nslcd nslcd/ldap-starttls boolean false
+nslcd nslcd/ldap-reqcert select allow
 nslcd nslcd/ldap-base string $LDAP_BASEDN
 nslcd nslcd/ldap-auth-type select none
-nslcd nslcd/ldap-uris string $LDAP_SERVER
+nslcd nslcd/ldap-uris string ldaps://$LDAP_SERVER
 libnss-ldapd:$ARCH libnss-ldapd/nsswitch multiselect group, passwd, shadow
 libnss-ldapd:$ARCH libnss-ldapd/clean-nsswitch boolean false
 EOF

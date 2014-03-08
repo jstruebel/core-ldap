@@ -24,7 +24,7 @@ def usage(s=None):
     sys.exit(1)
 
 DEFAULT_BASE="dc=example,dc=com"
-DEFAULT_SERVER='ldaps://127.0.0.1'
+DEFAULT_SERVER='127.0.0.1'
 
 def main():
     try:
