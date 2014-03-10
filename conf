@@ -19,3 +19,6 @@ install libnss-ldapd libpam-ldapd nslcd nscd
 # re-initialize libnss-ldapd
 /usr/lib/inithooks/bin/nss_ldapd.py --server=$LDAP_SERVER --base=$LDAP_BASE --binddn=$LDAP_BINDDN --pass=$LDAP_PASS
 
+# cleanup after re-initialization
+rm /etc/inithooks.conf
+
