@@ -66,7 +66,7 @@ else
     /etc/init.d/nslcd stop
 fi
 
-cat >> $INITHOOKS_CONF <<EOF
+cat >> /etc/inithooks.conf <<EOF
 export LDAP_BASEDN=$LDAP_BASEDN
 export LDAP_SERVER=$LDAP_SERVER
 EOF
