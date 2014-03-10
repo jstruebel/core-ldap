@@ -54,7 +54,7 @@ def main():
 
         ldap_base = d.get_input(
             "LDAP Base",
-            "Enter the LDAP Base.",
+            "Enter the LDAP Base DN.",
             DEFAULT_BASE)
 
     if ldap_base == "DEFAULT":
@@ -66,7 +66,7 @@ def main():
 
         ldap_user = d.get_input(
             "LDAP User",
-            "Enter the LDAP User for connecting.",
+            "Enter the LDAP User for NSS and PAM connections.",
             "cn=nss_pam," + ldap_base)
 
     if not password:
@@ -75,7 +75,7 @@ def main():
 
         password = d.get_password(
             "LDAP User Password",
-            "Enter new password for the LDAP user account.")
+            "Enter the password for the " + ldap_user + " user account.")
 
     if not server:
         if 'd' not in locals():
@@ -83,7 +83,7 @@ def main():
 
         server = d.get_input(
             "LDAP Server",
-            "Enter the LDAP Server URI.",
+            "Enter the LDAP Server.",
             DEFAULT_SERVER)
 
     script = os.path.join(os.path.dirname(__file__), 'nss_ldapd-reinit.sh')
