@@ -22,3 +22,6 @@ install libnss-ldapd libpam-ldapd nslcd nscd
 # cleanup after re-initialization
 rm /etc/inithooks.conf
 
+# stop services started during install
+/etc/init.d/nscd stop
+/etc/init.d/nslcd stop
