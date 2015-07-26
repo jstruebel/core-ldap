@@ -67,7 +67,7 @@ def main():
         ldap_user = d.get_input(
             "LDAP User",
             "Enter the LDAP User for NSS and PAM connections.",
-            "cn=nss_pam," + ldap_base)
+            "cn=nsspam," + ldap_base)
 
     if not password:
         if 'd' not in locals():
