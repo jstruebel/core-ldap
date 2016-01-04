@@ -59,6 +59,11 @@ CONF=/etc/nslcd.conf
 sed -i "s|#rootpwmoddn.*|rootpwmoddn $LDAP_BINDDN\nrootpwmodpw $LDAP_PASS|" $CONF
 chmod og-rwx $CONF
 
+# add ldap server config to ldap.conf
+CONF=/etc/ldap/ldap.conf
+sed -i "s|#?BASE.*|BASE\t$LDAP_BASEDN|" $CONF
+sed -i "s|#?URI.*|URI\tldap://$LDAP_SERVER|" $CONF
+
 # restart nslcd if it was running, or stop it
 if [ "$NSLCD_RUNNING" == "0" ]; then
     /etc/init.d/nslcd restart

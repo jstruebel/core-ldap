@@ -13,8 +13,25 @@ LDAP_BASE="dc=example,dc=com"
 LDAP_BINDDN="cn=nss_pam,$LDAP_BASE"
 LDAP_SERVER=127.0.0.1
 
-# install nss-pam-ldapd packages
-install libnss-ldapd libpam-ldapd nslcd nscd
+# install nss-pam-ldapd and  openssh ldap pub key packages
+install libnss-ldapd libpam-ldapd nslcd nscd python-pip python-ldap
+
+# install ssh-ldap-pubkey
+pip install ssh-ldap-pubkey
+
+# configure ssh-ldap-pubkey-wrapper with ldap.conf location
+CONF=/usr/local/bin/ssh-ldap-pubkey-wrapper
+sed -i "s|ssh-ldap-pubkey list|ssh-ldap-pubkey list -c /etc/ldap/ldap.conf|" $CONF
+
+# move ssh-ldap-pubkey-wrapper to /usr/bin to prevent warnings from sshd
+mv $CONF /usr/bin/ssh-ldap-pubkey-wrapper
+
+# allow self-signed ssl certs
+echo "TLS_REQCERT     allow" >> /etc/ldap/ldap.conf
+
+# configure sshd to lookup public keys in ldap
+CONF=/etc/ssh/sshd_config
+sed -i "s|#AuthorizedKeysFile|AuthorizedKeysCommand /usr/bin/ssh-ldap-pubkey-wrapper\nAuthorizedKeysCommandUser nobody\n#AuthorizedKeysFile|" $CONF
 
 # re-initialize libnss-ldapd
 /usr/lib/inithooks/bin/nss_ldapd.py --server=$LDAP_SERVER --base=$LDAP_BASE --binddn=$LDAP_BINDDN --pass=$LDAP_PASS
